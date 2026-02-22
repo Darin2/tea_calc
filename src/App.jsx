@@ -334,7 +334,7 @@ export default function TEACalculator() {
         </section>
 
         <div className="row g-3">
-          <section className="col-12 col-lg-6" aria-labelledby="building-code-heading">
+          <section className="col-12" aria-labelledby="building-code-heading">
             <h2 id="building-code-heading" style={sectionHeading}>Adopted Building Code <CodeTag dim>§61.1040(j)(1)</CodeTag></h2>
             <div style={{ ...card }}>
               <label style={lbl}>IBC Code Cycle</label>
@@ -349,7 +349,9 @@ export default function TEACalculator() {
               )}
             </div>
           </section>
-          <section className="col-12 col-lg-6" aria-labelledby="compliance-method-heading">
+        </div>
+        <div className="row g-3">
+          <section className="col-12" aria-labelledby="compliance-method-heading">
             <h2 id="compliance-method-heading" style={sectionHeading}>Compliance Method <CodeTag dim>§61.1040(h) / §61.1040(i)</CodeTag></h2>
             <div style={{ ...card }}>
               <div style={{ display: "flex", gap: 8 }}>
