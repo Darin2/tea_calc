@@ -545,28 +545,47 @@ export default function TEACalculator() {
             <h2 id="assumptions-heading" style={sectionHeading}>Assumptions, Caveats & Code References</h2>
             <div style={rC}>
             <div className="" style={{ fontSize: TYPO.sm, color: C.textDim, lineHeight: 1.7, padding: "16px 24px", borderTop: `1px solid ${C.border}` }}>
-              <div style={{ marginBottom: 14 }}>
-                <strong style={{ display: "block", marginBottom: 4, color: C.text }}>Building code:</strong>
-                {ibc.label} selected. Plumbing fixture ratios for Group E (Educational): WC 1:50/sex, Lav 1:50/sex, DF 1:100 — consistent across IBC 2003–2024. Staff areas at Business occupancy rates. Urinal substitution capped at {(ibc.urinalSubMax * 100).toFixed(0)}% of required WC in educational occupancies.
-                {ibc.genderNeutralProvisions && ` Multi-user gender-neutral provisions available per ${ibc.label} §2902.1.2 / §2902.2.`}
-                {ibc.dfExemptThreshold > 0 && ` Drinking fountain exemption: occupant loads ≤${ibc.dfExemptThreshold} per ${ibc.label}.`}
+              <div style={{ marginBottom: 18 }}>
+                <strong style={{ display: "block", marginBottom: 6, color: C.text }}>Building code</strong>
+                <ul style={{ margin: 0, paddingLeft: 20 }}>
+                  <li>{ibc.label} selected.</li>
+                  <li>Plumbing fixture ratios for Group E (Educational): WC 1:50/sex, Lav 1:50/sex, DF 1:100 — consistent across IBC 2003–2024.</li>
+                  <li>Staff areas at Business occupancy rates.</li>
+                  <li>Urinal substitution capped at {(ibc.urinalSubMax * 100).toFixed(0)}% of required WC in educational occupancies.</li>
+                  {ibc.genderNeutralProvisions && <li>Multi-user gender-neutral provisions available per {ibc.label} §2902.1.2 / §2902.2.</li>}
+                  {ibc.dfExemptThreshold > 0 && <li>Drinking fountain exemption: occupant loads ≤{ibc.dfExemptThreshold} per {ibc.label}.</li>}
+                </ul>
               </div>
-              <div style={{ marginBottom: 14 }}>
-                <strong style={{ display: "block", marginBottom: 4, color: C.text }}>TEA compliance:</strong>
-                {complianceMethod === "quantitative" ? "Quantitative" : "Qualitative"} method per §61.1040({complianceMethod === "quantitative" ? "h" : "i"}). Aggregate = {sfpp} SF/pp × {fmt(studentCount)} = {fmt(results.aggregateSF)} SF.
-                {complianceMethod === "qualitative" ? " Requires board-approved innovative instructional practices (§61.1040(i))." : ""}
+              <div style={{ marginBottom: 18 }}>
+                <strong style={{ display: "block", marginBottom: 6, color: C.text }}>TEA compliance</strong>
+                <ul style={{ margin: 0, paddingLeft: 20 }}>
+                  <li>{complianceMethod === "quantitative" ? "Quantitative" : "Qualitative"} method per §61.1040({complianceMethod === "quantitative" ? "h" : "i"}). Aggregate = {sfpp} SF/pp × {fmt(studentCount)} = {fmt(results.aggregateSF)} SF.</li>
+                  {complianceMethod === "qualitative" && <li>Requires board-approved innovative instructional practices (§61.1040(i)).</li>}
+                </ul>
               </div>
-              <div style={{ marginBottom: 14 }}>
-                <strong style={{ display: "block", marginBottom: 4, color: C.text }}>Cafeteria:</strong>
-                Quantitative (§61.1040(h)(1)): cafeterias/gyms may <em>not</em> count. Qualitative (§61.1040(i)(2)): cafeterias/library <em>may</em> count at 0.5 (≤50% day) or 1.0 (&gt;50%). Gyms excluded under both methods.
+              <div style={{ marginBottom: 18 }}>
+                <strong style={{ display: "block", marginBottom: 6, color: C.text }}>Cafeteria</strong>
+                <ul style={{ margin: 0, paddingLeft: 20 }}>
+                  <li>Quantitative (§61.1040(h)(1)): cafeterias/gyms may <em>not</em> count.</li>
+                  <li>Qualitative (§61.1040(i)(2)): cafeterias/library <em>may</em> count at 0.5 (≤50% day) or 1.0 (&gt;50%).</li>
+                  <li>Gyms excluded under both methods.</li>
+                </ul>
               </div>
-              <div style={{ marginBottom: 14 }}>
-                <strong style={{ display: "block", marginBottom: 4, color: C.text }}>Unincorporated areas:</strong>
-                Per §61.1040(j)(1)(A), projects outside municipal jurisdiction without adopted codes default to IBC 2003. Select "IBC 2003" if this applies.
+              <div style={{ marginBottom: 18 }}>
+                <strong style={{ display: "block", marginBottom: 6, color: C.text }}>Unincorporated areas</strong>
+                <ul style={{ margin: 0, paddingLeft: 20 }}>
+                  <li>Per §61.1040(j)(1)(A), projects outside municipal jurisdiction without adopted codes default to IBC 2003.</li>
+                  <li>Select "IBC 2003" if this applies.</li>
+                </ul>
               </div>
               <div>
-                <strong style={{ display: "block", marginBottom: 4, color: C.accent }}>Disclaimer:</strong>
-                Estimated minimums for early feasibility. Science lab safety (chemical storage (F), fume hoods (D), eye/face wash (G), safety showers (H), emergency shut-offs (J) per §61.1040(g)(2)) not sized by this tool. Local amendments may modify IBC requirements — verify with AHJ. Does not replace licensed architect or engineer services.
+                <strong style={{ display: "block", marginBottom: 6, color: C.accent }}>Disclaimer</strong>
+                <ul style={{ margin: 0, paddingLeft: 20 }}>
+                  <li>Estimated minimums for early feasibility.</li>
+                  <li>Science lab safety (chemical storage (F), fume hoods (D), eye/face wash (G), safety showers (H), emergency shut-offs (J) per §61.1040(g)(2)) not sized by this tool.</li>
+                  <li>Local amendments may modify IBC requirements — verify with AHJ.</li>
+                  <li>Does not replace licensed architect or engineer services.</li>
+                </ul>
               </div>
             </div>
           </div>
