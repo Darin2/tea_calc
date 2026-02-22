@@ -335,7 +335,7 @@ export default function TEACalculator() {
               </select>
               <div style={{ fontSize: TYPO.xs, color: C.textDim, marginTop: 8, lineHeight: 1.5 }}>{ibc.note}</div>
               {ibc.genderNeutralProvisions && (
-                <div style={{ marginTop: 8, fontSize: TYPO.xs, color: C.blue, background: `${C.blue}10`, padding: "6px 10px", borderRadius: 4, lineHeight: 1.5 }}>
+                <div className="max-line-length-60ch" style={{ marginTop: 8, fontSize: TYPO.xs, color: C.blue, background: `${C.blue}10`, padding: "6px 10px", borderRadius: 4, lineHeight: 1.5 }}>
                   ℹ This cycle includes multi-user gender-neutral facility provisions (§2902.1.2). All-gender restrooms may satisfy fixture requirements when privacy partitions comply with IPC §405.3.4.
                 </div>
               )}
@@ -413,7 +413,7 @@ export default function TEACalculator() {
               <span>Aggregate: {fmt(results.aggregateSF)} SF ({sfpp} SF/pp × {fmt(studentCount)}){meetsAggregate ? ` — +${fmt(results.totalInstructionalSF - results.aggregateSF)} SF` : ` — ${fmt(results.aggregateSF - results.totalInstructionalSF)} SF short`}</span>
             </div>
             {cafeteriaAsInstructional && results.cafeteriaInstructionalCredit > 0 && (
-              <div style={{ margin: "0 24px 16px", padding: "10px 16px", borderRadius: 6, background: `${C.blue}10`, border: `1px solid ${C.blue}25`, fontSize: TYPO.sm, color: C.blue }}>ℹ Cafeteria credit: {fmt(results.cafeteriaInstructionalCredit)} SF at 0.5 factor · §61.1040(i)(2)</div>
+              <div className="max-line-length-60ch" style={{ margin: "0 24px 16px", padding: "10px 16px", borderRadius: 6, background: `${C.blue}10`, border: `1px solid ${C.blue}25`, fontSize: TYPO.sm, color: C.blue }}>ℹ Cafeteria credit: {fmt(results.cafeteriaInstructionalCredit)} SF at 0.5 factor · §61.1040(i)(2)</div>
             )}
           </div>
 
@@ -478,7 +478,7 @@ export default function TEACalculator() {
                 {results.plumbing.drinkingFountains === 0 ? ` (exempt — occupant load ≤${ibc.dfExemptThreshold} per ${ibc.label})` : ` (1:100 occupants · hi-lo accessible · TAS §602)`}
               </div>
               {results.plumbing.genderNeutral && (
-                <div style={{ margin: "0 24px 16px", padding: "10px 16px", borderRadius: 6, background: `${C.blue}10`, border: `1px solid ${C.blue}25`, fontSize: TYPO.sm, color: C.blue, lineHeight: 1.5 }}>
+                <div className="max-line-length-60ch" style={{ margin: "0 24px 16px", padding: "10px 16px", borderRadius: 6, background: `${C.blue}10`, border: `1px solid ${C.blue}25`, fontSize: TYPO.sm, color: C.blue, lineHeight: 1.5 }}>
                   ℹ {ibc.label} permits multi-user gender-neutral facilities when privacy partitions comply with IPC §405.3.4. All-gender single-user rooms contribute to required fixture count per §2902.1.2. Group E occupancies must maintain separate facilities unless exception criteria are met.
                 </div>
               )}
@@ -502,7 +502,7 @@ export default function TEACalculator() {
           {/* ASSUMPTIONS */}
           <div style={rC}>
             <div style={rH}><span style={rHL}>Assumptions, Caveats & Code References</span></div>
-            <div style={{ fontSize: TYPO.sm, color: C.textDim, lineHeight: 1.7, padding: "16px 24px", borderTop: `1px solid ${C.border}` }}>
+            <div className="max-line-length-60ch" style={{ fontSize: TYPO.sm, color: C.textDim, lineHeight: 1.7, padding: "16px 24px", borderTop: `1px solid ${C.border}` }}>
               <strong>Building code:</strong> {ibc.label} selected. Plumbing fixture ratios for Group E (Educational): WC 1:50/sex, Lav 1:50/sex, DF 1:100 — consistent across IBC 2003–2024. Staff areas at Business occupancy rates. Urinal substitution capped at {(ibc.urinalSubMax * 100).toFixed(0)}% of required WC in educational occupancies.
               {ibc.genderNeutralProvisions && ` Multi-user gender-neutral provisions available per ${ibc.label} §2902.1.2 / §2902.2.`}
               {ibc.dfExemptThreshold > 0 && ` Drinking fountain exemption: occupant loads ≤${ibc.dfExemptThreshold} per ${ibc.label}.`}
