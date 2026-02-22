@@ -544,7 +544,7 @@ export default function TEACalculator() {
           <section aria-labelledby="assumptions-heading" style={sectionSpacing}>
             <h2 id="assumptions-heading" style={sectionHeading}>Assumptions, Caveats & Code References</h2>
             <div style={rC}>
-            <div className="" style={{ fontSize: TYPO.sm, color: C.textDim, lineHeight: 1.7, padding: "16px 24px", borderTop: `1px solid ${C.border}` }}>
+            <div style={{ fontSize: TYPO.sm, color: C.textDim, lineHeight: 1.7, padding: "16px 24px", borderTop: `1px solid ${C.border}` }}>
               <div style={{ marginBottom: 18 }}>
                 <strong style={{ display: "block", marginBottom: 6, color: C.text }}>Building code</strong>
                 <ul style={{ margin: 0, paddingLeft: 20 }}>
