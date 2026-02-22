@@ -295,29 +295,37 @@ export default function TEACalculator() {
       <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
 
       {/* HEADER */}
-      <div style={{ borderBottom: `1px solid ${C.border}`, padding: "28px 32px 24px", background: `linear-gradient(180deg, ${C.surface} 0%, ${C.bg} 100%)` }}>
-        <div style={{ fontSize: TYPO.xs, fontWeight: 700, letterSpacing: "0.15em", textTransform: "uppercase", color: C.accent, marginBottom: 6 }}>TEA §61.1040 — New Construction</div>
-        <h1 style={{ fontSize: TYPO.h1, fontWeight: 700, color: C.text, margin: 0, lineHeight: 1.3 }}>School Facility Space Calculator</h1>
-        <div style={{ fontSize: TYPO.body, color: C.textDim, marginTop: 6, lineHeight: 1.5 }}>TAC Title 19, Part 2, Ch. 61, Subchapter CC · {ibc.label} · Texas Accessibility Standards</div>
+      <div style={{ borderBottom: `1px solid ${C.border}`, background: `linear-gradient(180deg, ${C.surface} 0%, ${C.bg} 100%)` }}>
+        <div className="container container--wide-padding py-4 py-lg-5">
+          <div className="row">
+            <div className="col-12">
+              <div style={{ fontSize: TYPO.xs, fontWeight: 700, letterSpacing: "0.15em", textTransform: "uppercase", color: C.accent, marginBottom: 6 }}>TEA §61.1040 — New Construction</div>
+              <h1 style={{ fontSize: TYPO.h1, fontWeight: 700, color: C.text, margin: 0, lineHeight: 1.3 }}>School Facility Space Calculator</h1>
+              <div style={{ fontSize: TYPO.body, color: C.textDim, marginTop: 6, lineHeight: 1.5 }}>TAC Title 19, Part 2, Ch. 61, Subchapter CC · {ibc.label} · Texas Accessibility Standards</div>
+            </div>
+          </div>
+        </div>
       </div>
 
-      <div style={{ padding: "24px 32px 80px", maxWidth: "100vw" }}>
+      <div className="container container--wide-padding py-4 py-lg-5 pb-5">
+        <div className="row">
+          <div className="col-12">
 
         {/* DESIGN CRITERIA */}
         <div style={secL}>Design Criteria <CodeTag dim>§61.1040(d)(2)</CodeTag></div>
         <div style={card}>
-          <div style={{ display: "flex", gap: 16, flexWrap: "wrap" }}>
-            <div style={{ flex: 1, minWidth: 180 }}>
+          <div className="row g-3">
+            <div className="col-12">
               <label style={lbl}>Campus Type <CodeTag dim>§61.1040(a)(29)</CodeTag></label>
               <select style={sel} value={campusType} onChange={(e) => handleCampusChange(e.target.value)}>
                 {Object.entries(TEA_LIMITS).map(([k, v]) => <option key={k} value={k}>{v.label}</option>)}
               </select>
             </div>
-            <div style={{ flex: 1, minWidth: 180 }}>
+            <div className="col-12">
               <label style={lbl}>Max Instructional Capacity <CodeTag dim>§61.1040(a)(15)</CodeTag></label>
               <input style={inp} type="number" min={1} max={5000} value={studentCount} onChange={(e) => setStudentCount(Math.max(0, parseInt(e.target.value, 10) || 0))} />
             </div>
-            <div style={{ flex: 1, minWidth: 180 }}>
+            <div className="col-12">
               <label style={lbl}>Class Size <span style={{ color: C.textDim, fontWeight: 400 }}>(max {maxAllowed})</span> <CodeTag dim>TEC §25.112</CodeTag></label>
               <input style={inp} type="number" min={1} max={maxAllowed} value={classSize !== null ? classSize : effectiveClassSize} onChange={(e) => handleClassSizeChange(e.target.value)} />
             </div>
@@ -518,6 +526,8 @@ export default function TEACalculator() {
             </div>
           </div>
         </>)}
+          </div>
+        </div>
       </div>
     </div>
   );

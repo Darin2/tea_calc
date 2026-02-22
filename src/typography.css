@@ -35,3 +35,21 @@
 .max-line-length-60ch {
   max-width: min(100%, 60ch);
 }
+
+/* Extra side padding on wide screens (use with Bootstrap .container) */
+.container--wide-padding {
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+@media (min-width: 992px) {
+  .container--wide-padding {
+    padding-left: 3rem;
+    padding-right: 3rem;
+  }
+}
+@media (min-width: 1200px) {
+  .container--wide-padding {
+    padding-left: 4rem;
+    padding-right: 4rem;
+  }
+}
