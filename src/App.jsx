@@ -518,7 +518,7 @@ export default function TEACalculator() {
                 {results.plumbing.drinkingFountains === 0 ? ` (exempt — occupant load ≤${ibc.dfExemptThreshold} per ${ibc.label})` : ` (1:100 occupants · hi-lo accessible · TAS §602)`}
               </div>
               {results.plumbing.genderNeutral && (
-                <div className="max-line-length-60ch" style={{ margin: "0 24px 16px", padding: "10px 16px", borderRadius: 6, background: `${C.blue}10`, border: `1px solid ${C.blue}25`, fontSize: TYPO.sm, color: C.blue, lineHeight: 1.5 }}>
+                <div style={{ margin: "0 24px 16px", padding: "10px 16px", borderRadius: 6, background: `${C.blue}10`, border: `1px solid ${C.blue}25`, fontSize: TYPO.sm, color: C.blue, lineHeight: 1.5 }}>
                   ℹ {ibc.label} permits multi-user gender-neutral facilities when privacy partitions comply with IPC §405.3.4. All-gender single-user rooms contribute to required fixture count per §2902.1.2. Group E occupancies must maintain separate facilities unless exception criteria are met.
                 </div>
               )}
