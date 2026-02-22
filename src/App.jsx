@@ -301,7 +301,7 @@ export default function TEACalculator() {
         <div style={{ fontSize: TYPO.body, color: C.textDim, marginTop: 6, lineHeight: 1.5 }}>TAC Title 19, Part 2, Ch. 61, Subchapter CC · {ibc.label} · Texas Accessibility Standards</div>
       </div>
 
-      <div style={{ padding: "24px 32px 80px", maxWidth: 960 }}>
+      <div style={{ padding: "24px 32px 80px", maxWidth: "100vw" }}>
 
         {/* DESIGN CRITERIA */}
         <div style={secL}>Design Criteria <CodeTag dim>§61.1040(d)(2)</CodeTag></div>

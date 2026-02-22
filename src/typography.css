@@ -30,3 +30,8 @@
   /* Small icon (check/cross) */
   --font-size-icon: clamp(1rem, 0.95rem + 0.4vw, 1rem);
 }
+
+/* Optional: cap width at ~60 characters per line for readability. Add class where desired. */
+.max-line-length-60ch {
+  max-width: min(100%, 60ch);
+}
