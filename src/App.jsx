@@ -390,7 +390,7 @@ export default function TEACalculator() {
 
         <section aria-labelledby="flexibility-heading" style={sectionSpacing}>
           <h2 id="flexibility-heading" style={sectionHeading}>Flexibility Level <CodeTag dim>§61.1040(h)(2)(A–D)</CodeTag></h2>
-          <div style={{ display: "flex", gap: 10, marginBottom: 16, flexWrap: "wrap" }}>
+          <div className="flexibility-grid">
           {FLEXIBILITY_LEVELS.map((fl) => (
             <div key={fl.id} style={chip(flexLevel === fl.id)} onClick={() => setFlexLevel(fl.id)}>
               <div style={{ fontSize: TYPO.bodyLg, fontWeight: 700, color: flexLevel === fl.id ? C.accent : C.textMid, marginBottom: 2 }}>{fl.label}</div>

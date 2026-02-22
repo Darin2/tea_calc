@@ -36,6 +36,19 @@
   max-width: min(100%, 60ch);
 }
 
+/* Flexibility level options: 1 column on small screens, 2×2 grid on larger */
+.flexibility-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 10px;
+  margin-bottom: 16px;
+}
+@media (min-width: 560px) {
+  .flexibility-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
 /* Main layout: width + side padding in one place (use with Bootstrap .container) */
 .container--wide-padding {
   max-width: 960px;
