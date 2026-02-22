@@ -1,4 +1,4 @@
-import { useState, useMemo, useCallback } from "react";
+import { useState, useMemo, useCallback, useRef, useEffect } from "react";
 
 // ═══════════════════════════════════════════════
 // IBC CYCLE DATA
@@ -251,6 +251,8 @@ export default function TEACalculator() {
   const [studentCount, setStudentCount] = useState(750);
   const [flexLevel, setFlexLevel] = useState("L2");
   const [showAdvanced, setShowAdvanced] = useState(false);
+  const [advancedHeight, setAdvancedHeight] = useState(0);
+  const advancedContentRef = useRef(null);
   const [classSize, setClassSize] = useState(null);
   const [advanced, setAdvanced] = useState({ ...DEFAULT_ADVANCED.elementary });
   const [complianceMethod, setComplianceMethod] = useState("quantitative");
@@ -259,6 +261,20 @@ export default function TEACalculator() {
   const [ibcCycle, setIbcCycle] = useState("2021");
 
   const handleCampusChange = useCallback((type) => { setCampusType(type); setClassSize(null); setAdvanced({ ...DEFAULT_ADVANCED[type] }); setCafeteriaAsInstructional(false); }, []);
+
+  useEffect(() => {
+    if (showAdvanced && advancedContentRef.current) {
+      const run = () => {
+        const h = advancedContentRef.current?.scrollHeight ?? 600;
+        setAdvancedHeight(h);
+      };
+      const id = requestAnimationFrame(() => requestAnimationFrame(run));
+      return () => cancelAnimationFrame(id);
+    } else if (!showAdvanced) {
+      const t = setTimeout(() => setAdvancedHeight(0), 220);
+      return () => clearTimeout(t);
+    }
+  }, [showAdvanced]);
   const effectiveClassSize = classSize !== null ? classSize : TEA_LIMITS[campusType].defaultClassSize;
   const maxAllowed = TEA_LIMITS[campusType].maxClassSize;
   const handleClassSizeChange = (val) => { const n = parseInt(val, 10); if (isNaN(n)) { setClassSize(null); return; } setClassSize(Math.min(Math.max(1, n), maxAllowed)); };
@@ -281,14 +297,15 @@ export default function TEACalculator() {
   const rC = { background: C.surface, border: `1px solid ${C.border}`, borderRadius: 8, overflow: "hidden", marginBottom: 16 };
   const rH = { padding: "14px 24px", borderBottom: `1px solid ${C.border}`, display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: 8 };
   const rHL = { fontSize: TYPO.xs, fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: C.textDim };
-  const th = { textAlign: "left", padding: "10px 16px", fontSize: TYPO.xs, fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", color: C.textDim, borderBottom: `1px solid ${C.border}`, background: C.bg };
-  const thR = { ...th, textAlign: "right" };
+  const th = { textAlign: "left", padding: "10px 16px", fontSize: TYPO.xs, fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", color: C.textDim, borderBottom: `1px solid ${C.border}`, background: C.bg, whiteSpace: "nowrap" };
+  const thR = { ...th, textAlign: "right", minWidth: "5em" };
   const td = { padding: "10px 16px", borderBottom: `1px solid ${C.border}`, color: C.text, fontSize: TYPO.bodyLg };
   const tdR = { ...td, textAlign: "right", fontFamily: "'DM Mono', monospace" };
   const tdN = { ...td, color: C.textDim, fontSize: TYPO.sm, maxWidth: 280 };
   const tdC = { ...td, fontSize: TYPO.caption, fontFamily: "'DM Mono', monospace", color: `${C.textDim}90` };
   const chip = (on) => ({ flex: 1, padding: "10px 12px", background: on ? `${C.accent}15` : C.bg, border: `1px solid ${on ? C.accent : C.border}`, borderRadius: 6, cursor: "pointer", textAlign: "center", transition: "all .15s", minWidth: 100 });
   const radio = (on) => ({ padding: "8px 14px", background: on ? `${C.accent}15` : C.bg, border: `1px solid ${on ? C.accent : C.border}`, borderRadius: 6, cursor: "pointer", fontSize: TYPO.body, fontWeight: 600, color: on ? C.accent : C.textDim, fontFamily: "'DM Sans', sans-serif", transition: "all .15s" });
+  const sectionSpacing = { marginBottom: 40 };
 
   return (
     <div style={{ background: C.bg, color: C.text, minHeight: "100vh", fontFamily: "'DM Sans', 'Helvetica Neue', sans-serif", padding: 0 }}>
@@ -311,7 +328,7 @@ export default function TEACalculator() {
         <div className="row">
           <div className="col-12">
 
-        <section aria-labelledby="design-criteria-heading">
+        <section aria-labelledby="design-criteria-heading" style={sectionSpacing}>
           <h2 id="design-criteria-heading" style={sectionHeading}>Design Criteria <CodeTag dim>§61.1040(d)(2)</CodeTag></h2>
           <div style={card}>
           <div className="row g-3">
@@ -333,7 +350,7 @@ export default function TEACalculator() {
           </div>
         </section>
 
-        <div className="row g-3">
+        <div className="row g-3" style={sectionSpacing}>
           <section className="col-12" aria-labelledby="building-code-heading">
             <h2 id="building-code-heading" style={sectionHeading}>Adopted Building Code <CodeTag dim>§61.1040(j)(1)</CodeTag></h2>
             <div style={{ ...card }}>
@@ -350,7 +367,7 @@ export default function TEACalculator() {
             </div>
           </section>
         </div>
-        <div className="row g-3">
+        <div className="row g-3" style={sectionSpacing}>
           <section className="col-12" aria-labelledby="compliance-method-heading">
             <h2 id="compliance-method-heading" style={sectionHeading}>Compliance Method <CodeTag dim>§61.1040(h) / §61.1040(i)</CodeTag></h2>
             <div style={{ ...card }}>
@@ -371,7 +388,7 @@ export default function TEACalculator() {
           </section>
         </div>
 
-        <section aria-labelledby="flexibility-heading">
+        <section aria-labelledby="flexibility-heading" style={sectionSpacing}>
           <h2 id="flexibility-heading" style={sectionHeading}>Flexibility Level <CodeTag dim>§61.1040(h)(2)(A–D)</CodeTag></h2>
           <div style={{ display: "flex", gap: 10, marginBottom: 16, flexWrap: "wrap" }}>
           {FLEXIBILITY_LEVELS.map((fl) => (
@@ -383,30 +400,36 @@ export default function TEACalculator() {
           </div>
         </section>
 
-        <section aria-labelledby="advanced-heading">
+        <section aria-labelledby="advanced-heading" style={sectionSpacing}>
           <h2 id="advanced-heading" style={sectionHeading}>
             <button type="button" style={{ display: "flex", alignItems: "center", gap: 8, cursor: "pointer", padding: 0, border: "none", background: "none", color: "inherit", fontSize: "inherit", fontWeight: "inherit", letterSpacing: "inherit", textTransform: "inherit", fontFamily: "inherit" }} onClick={() => setShowAdvanced(!showAdvanced)}>
               <span style={{ fontSize: TYPO.lg, transform: showAdvanced ? "rotate(90deg)" : "rotate(0deg)", display: "inline-block", transition: "transform .15s" }}>▸</span>
               Advanced Parameters
             </button>
           </h2>
-          {showAdvanced && (
-          <div style={card}>
-            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(180px, 1fr))", gap: 16 }}>
-              {campusType !== "elementary" && <div><label style={lbl}>Periods / Day</label><input style={inp} type="number" min={1} max={12} value={advanced.periodsPerDay} onChange={(e) => updateAdv("periodsPerDay", Math.max(1, parseInt(e.target.value, 10) || 7))} /></div>}
-              <div><label style={lbl}>Utilization Factor</label><input style={inp} type="number" min={0.5} max={1} step={0.05} value={advanced.utilization} onChange={(e) => updateAdv("utilization", Math.min(1, Math.max(0.5, parseFloat(e.target.value) || 0.85)))} /></div>
-              <div><label style={lbl}>SpEd % Enrollment</label><input style={inp} type="number" min={0} max={0.5} step={0.01} value={advanced.spedPct} onChange={(e) => updateAdv("spedPct", Math.min(0.5, Math.max(0, parseFloat(e.target.value) || 0.12)))} /></div>
-              <div><label style={lbl}>SpEd Room Capacity</label><input style={inp} type="number" min={1} max={20} value={advanced.spedRoomCap} onChange={(e) => updateAdv("spedRoomCap", Math.max(1, parseInt(e.target.value, 10) || 12))} /></div>
-              <div><label style={lbl}>Elective Rooms</label><input style={inp} type="number" min={0} max={30} value={advanced.electiveRooms} onChange={(e) => updateAdv("electiveRooms", Math.max(0, parseInt(e.target.value, 10) || 0))} /></div>
-              {campusType !== "elementary" && <div><label style={lbl}>Science Config <CodeTag dim>§61.1040(g)(2)</CodeTag></label><div style={{ display: "flex", gap: 8 }}><div style={radio(advanced.scienceConfig === "combo")} onClick={() => updateAdv("scienceConfig", "combo")}>Combo</div><div style={radio(advanced.scienceConfig === "separate")} onClick={() => updateAdv("scienceConfig", "separate")}>Separate</div></div></div>}
-              <div><label style={lbl}>Net-to-Gross Factor</label><input style={inp} type="number" min={1.1} max={1.7} step={0.01} value={grossOverride !== null ? grossOverride : NET_TO_GROSS[campusType]} onChange={(e) => { const v = parseFloat(e.target.value); setGrossOverride(isNaN(v) ? null : Math.min(1.7, Math.max(1.1, v))); }} /></div>
+          <div
+            style={{
+              overflow: "hidden",
+              maxHeight: showAdvanced ? advancedHeight : 0,
+              transition: showAdvanced ? "max-height 200ms ease-out" : "max-height 200ms ease-in",
+            }}
+          >
+            <div ref={advancedContentRef} style={card}>
+              <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(180px, 1fr))", gap: 16 }}>
+                {campusType !== "elementary" && <div><label style={lbl}>Periods / Day</label><input style={inp} type="number" min={1} max={12} value={advanced.periodsPerDay} onChange={(e) => updateAdv("periodsPerDay", Math.max(1, parseInt(e.target.value, 10) || 7))} /></div>}
+                <div><label style={lbl}>Utilization Factor</label><input style={inp} type="number" min={0.5} max={1} step={0.05} value={advanced.utilization} onChange={(e) => updateAdv("utilization", Math.min(1, Math.max(0.5, parseFloat(e.target.value) || 0.85)))} /></div>
+                <div><label style={lbl}>SpEd % Enrollment</label><input style={inp} type="number" min={0} max={0.5} step={0.01} value={advanced.spedPct} onChange={(e) => updateAdv("spedPct", Math.min(0.5, Math.max(0, parseFloat(e.target.value) || 0.12)))} /></div>
+                <div><label style={lbl}>SpEd Room Capacity</label><input style={inp} type="number" min={1} max={20} value={advanced.spedRoomCap} onChange={(e) => updateAdv("spedRoomCap", Math.max(1, parseInt(e.target.value, 10) || 12))} /></div>
+                <div><label style={lbl}>Elective Rooms</label><input style={inp} type="number" min={0} max={30} value={advanced.electiveRooms} onChange={(e) => updateAdv("electiveRooms", Math.max(0, parseInt(e.target.value, 10) || 0))} /></div>
+                {campusType !== "elementary" && <div><label style={lbl}>Science Config <CodeTag dim>§61.1040(g)(2)</CodeTag></label><div style={{ display: "flex", gap: 8 }}><div style={radio(advanced.scienceConfig === "combo")} onClick={() => updateAdv("scienceConfig", "combo")}>Combo</div><div style={radio(advanced.scienceConfig === "separate")} onClick={() => updateAdv("scienceConfig", "separate")}>Separate</div></div></div>}
+                <div><label style={lbl}>Net-to-Gross Factor</label><input style={inp} type="number" min={1.1} max={1.7} step={0.01} value={grossOverride !== null ? grossOverride : NET_TO_GROSS[campusType]} onChange={(e) => { const v = parseFloat(e.target.value); setGrossOverride(isNaN(v) ? null : Math.min(1.7, Math.max(1.1, v))); }} /></div>
+              </div>
             </div>
           </div>
-          )}
         </section>
 
         {studentCount > 0 && (<>
-          <section aria-labelledby="project-summary-heading" style={{ marginTop: 24 }}>
+          <section aria-labelledby="project-summary-heading" style={{ marginTop: 24, marginBottom: 40 }}>
             <h2 id="project-summary-heading" style={sectionHeading}>Project Summary</h2>
             <div style={rC}>
             <div style={rH}><span style={rHL}>Space Summary</span><CodeTag>{complianceMethod === "quantitative" ? "§61.1040(h)" : "§61.1040(i)"} + {ibc.label}</CodeTag></div>
@@ -432,7 +455,7 @@ export default function TEACalculator() {
           </div>
           </section>
 
-          <section aria-labelledby="instructional-spaces-heading">
+          <section aria-labelledby="instructional-spaces-heading" style={sectionSpacing}>
             <h2 id="instructional-spaces-heading" style={sectionHeading}>Section 1 — Instructional Spaces <CodeTag>§61.1040(g)–(h)</CodeTag></h2>
             <div style={rC}>
             <div style={{ overflowX: "auto" }}>
@@ -450,7 +473,7 @@ export default function TEACalculator() {
           </div>
           </section>
 
-          <section aria-labelledby="support-spaces-heading">
+          <section aria-labelledby="support-spaces-heading" style={sectionSpacing}>
             <h2 id="support-spaces-heading" style={sectionHeading}>Section 2 — Support & Service Spaces <CodeTag dim>{ibc.label} / TAS / District Std.</CodeTag></h2>
             <div style={rC}>
             <div style={rH}><span style={rHL}>Administrative, Service & Mechanical</span><span style={{ fontSize: TYPO.xs, color: C.textDim }}>Staff: {results.staffCount} ({(STAFF_RATIO[campusType] * 100).toFixed(0)}%)</span></div>
@@ -467,7 +490,7 @@ export default function TEACalculator() {
           </section>
 
           {results.plumbing && (
-          <section aria-labelledby="plumbing-heading">
+          <section aria-labelledby="plumbing-heading" style={sectionSpacing}>
             <h2 id="plumbing-heading" style={sectionHeading}>Plumbing Fixture Detail <CodeTag dim>{ibc.label} §2902.1 Table 2902.1 / TAS Ch. 6</CodeTag></h2>
             <div style={rC}>
               <div style={{ padding: "16px 24px", fontSize: TYPO.body, color: C.textMid, display: "grid", gridTemplateColumns: "1fr 1fr", gap: 16 }}>
@@ -503,7 +526,7 @@ export default function TEACalculator() {
           </section>
           )}
 
-          <section aria-labelledby="gross-building-heading">
+          <section aria-labelledby="gross-building-heading" style={sectionSpacing}>
             <h2 id="gross-building-heading" style={sectionHeading}>Section 3 — Gross Building Area <CodeTag dim>Industry Standard</CodeTag></h2>
             <div style={rC}>
             <table style={{ width: "100%", borderCollapse: "collapse", fontSize: TYPO.bodyLg }}>
@@ -518,7 +541,7 @@ export default function TEACalculator() {
           </div>
           </section>
 
-          <section aria-labelledby="assumptions-heading">
+          <section aria-labelledby="assumptions-heading" style={sectionSpacing}>
             <h2 id="assumptions-heading" style={sectionHeading}>Assumptions, Caveats & Code References</h2>
             <div style={rC}>
             <div className="max-line-length-60ch" style={{ fontSize: TYPO.sm, color: C.textDim, lineHeight: 1.7, padding: "16px 24px", borderTop: `1px solid ${C.border}` }}>
