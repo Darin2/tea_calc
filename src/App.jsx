@@ -224,9 +224,26 @@ function calculate(campusType, studentCount, flexLevel, classSize, advanced, com
 // ═══════════════════════════════════════════════
 
 const C = { bg: "#0C0F14", surface: "#141820", border: "#232A36", accent: "#D4A053", accentDim: "#8B6D3F", accentBright: "#E8B86D", text: "#E8E4DD", textDim: "#8A8680", textMid: "#B5B0A8", red: "#C45C5C", green: "#5CA06C", blue: "#5C8AB4", purple: "#9B7EC8" };
+
+// Responsive typography scale (see typography.css); use TYPO.* in fontSize for fluid mobile→desktop scaling
+const TYPO = {
+  caption: "var(--font-size-caption)",
+  xs: "var(--font-size-xs)",
+  sm: "var(--font-size-sm)",
+  body: "var(--font-size-body)",
+  bodyLg: "var(--font-size-bodyLg)",
+  md: "var(--font-size-md)",
+  lg: "var(--font-size-lg)",
+  xl: "var(--font-size-xl)",
+  card: "var(--font-size-card)",
+  display: "var(--font-size-display)",
+  h1: "var(--font-size-h1)",
+  icon: "var(--font-size-icon)",
+};
+
 function fmt(n) { return n.toLocaleString("en-US"); }
 function CodeTag({ children, dim }) {
-  return <span style={{ fontSize: 9, fontFamily: "'DM Mono', monospace", color: dim ? `${C.textDim}90` : C.accentDim, background: dim ? `${C.text}08` : `${C.accent}10`, padding: "2px 6px", borderRadius: 3, fontWeight: 500 }}>{children}</span>;
+  return <span style={{ fontSize: TYPO.caption, fontFamily: "'DM Mono', monospace", color: dim ? `${C.textDim}90` : C.accentDim, background: dim ? `${C.text}08` : `${C.accent}10`, padding: "2px 6px", borderRadius: 3, fontWeight: 500 }}>{children}</span>;
 }
 
 export default function TEACalculator() {
@@ -256,22 +273,22 @@ export default function TEACalculator() {
   const ibc = IBC_CYCLES[ibcCycle];
 
   // Shared styles
-  const inp = { width: "100%", padding: "10px 12px", background: C.bg, border: `1px solid ${C.border}`, borderRadius: 6, color: C.text, fontSize: 14, fontFamily: "'DM Mono', monospace", outline: "none", boxSizing: "border-box" };
+  const inp = { width: "100%", padding: "10px 12px", background: C.bg, border: `1px solid ${C.border}`, borderRadius: 6, color: C.text, fontSize: TYPO.lg, fontFamily: "'DM Mono', monospace", outline: "none", boxSizing: "border-box" };
   const sel = { ...inp, fontFamily: "'DM Sans', sans-serif", appearance: "none", cursor: "pointer" };
-  const lbl = { display: "block", fontSize: 11, fontWeight: 600, color: C.textMid, marginBottom: 6 };
+  const lbl = { display: "block", fontSize: TYPO.sm, fontWeight: 600, color: C.textMid, marginBottom: 6 };
   const card = { background: C.surface, border: `1px solid ${C.border}`, borderRadius: 8, padding: "20px 24px", marginBottom: 16 };
-  const secL = { fontSize: 10, fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: C.textDim, marginBottom: 12, display: "flex", alignItems: "center", gap: 8, flexWrap: "wrap" };
+  const secL = { fontSize: TYPO.xs, fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: C.textDim, marginBottom: 12, display: "flex", alignItems: "center", gap: 8, flexWrap: "wrap" };
   const rC = { background: C.surface, border: `1px solid ${C.border}`, borderRadius: 8, overflow: "hidden", marginBottom: 16 };
   const rH = { padding: "14px 24px", borderBottom: `1px solid ${C.border}`, display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: 8 };
-  const rHL = { fontSize: 10, fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: C.textDim };
-  const th = { textAlign: "left", padding: "10px 16px", fontSize: 10, fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", color: C.textDim, borderBottom: `1px solid ${C.border}`, background: C.bg };
+  const rHL = { fontSize: TYPO.xs, fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: C.textDim };
+  const th = { textAlign: "left", padding: "10px 16px", fontSize: TYPO.xs, fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", color: C.textDim, borderBottom: `1px solid ${C.border}`, background: C.bg };
   const thR = { ...th, textAlign: "right" };
-  const td = { padding: "10px 16px", borderBottom: `1px solid ${C.border}`, color: C.text, fontSize: 13 };
+  const td = { padding: "10px 16px", borderBottom: `1px solid ${C.border}`, color: C.text, fontSize: TYPO.bodyLg };
   const tdR = { ...td, textAlign: "right", fontFamily: "'DM Mono', monospace" };
-  const tdN = { ...td, color: C.textDim, fontSize: 11, maxWidth: 280 };
-  const tdC = { ...td, fontSize: 9, fontFamily: "'DM Mono', monospace", color: `${C.textDim}90` };
+  const tdN = { ...td, color: C.textDim, fontSize: TYPO.sm, maxWidth: 280 };
+  const tdC = { ...td, fontSize: TYPO.caption, fontFamily: "'DM Mono', monospace", color: `${C.textDim}90` };
   const chip = (on) => ({ flex: 1, padding: "10px 12px", background: on ? `${C.accent}15` : C.bg, border: `1px solid ${on ? C.accent : C.border}`, borderRadius: 6, cursor: "pointer", textAlign: "center", transition: "all .15s", minWidth: 100 });
-  const radio = (on) => ({ padding: "8px 14px", background: on ? `${C.accent}15` : C.bg, border: `1px solid ${on ? C.accent : C.border}`, borderRadius: 6, cursor: "pointer", fontSize: 12, fontWeight: 600, color: on ? C.accent : C.textDim, fontFamily: "'DM Sans', sans-serif", transition: "all .15s" });
+  const radio = (on) => ({ padding: "8px 14px", background: on ? `${C.accent}15` : C.bg, border: `1px solid ${on ? C.accent : C.border}`, borderRadius: 6, cursor: "pointer", fontSize: TYPO.body, fontWeight: 600, color: on ? C.accent : C.textDim, fontFamily: "'DM Sans', sans-serif", transition: "all .15s" });
 
   return (
     <div style={{ background: C.bg, color: C.text, minHeight: "100vh", fontFamily: "'DM Sans', 'Helvetica Neue', sans-serif", padding: 0 }}>
@@ -279,9 +296,9 @@ export default function TEACalculator() {
 
       {/* HEADER */}
       <div style={{ borderBottom: `1px solid ${C.border}`, padding: "28px 32px 24px", background: `linear-gradient(180deg, ${C.surface} 0%, ${C.bg} 100%)` }}>
-        <div style={{ fontSize: 10, fontWeight: 700, letterSpacing: "0.15em", textTransform: "uppercase", color: C.accent, marginBottom: 6 }}>TEA §61.1040 — New Construction</div>
-        <h1 style={{ fontSize: 22, fontWeight: 700, color: C.text, margin: 0, lineHeight: 1.3 }}>School Facility Space Calculator</h1>
-        <div style={{ fontSize: 12, color: C.textDim, marginTop: 6, lineHeight: 1.5 }}>TAC Title 19, Part 2, Ch. 61, Subchapter CC · {ibc.label} · Texas Accessibility Standards</div>
+        <div style={{ fontSize: TYPO.xs, fontWeight: 700, letterSpacing: "0.15em", textTransform: "uppercase", color: C.accent, marginBottom: 6 }}>TEA §61.1040 — New Construction</div>
+        <h1 style={{ fontSize: TYPO.h1, fontWeight: 700, color: C.text, margin: 0, lineHeight: 1.3 }}>School Facility Space Calculator</h1>
+        <div style={{ fontSize: TYPO.body, color: C.textDim, marginTop: 6, lineHeight: 1.5 }}>TAC Title 19, Part 2, Ch. 61, Subchapter CC · {ibc.label} · Texas Accessibility Standards</div>
       </div>
 
       <div style={{ padding: "24px 32px 80px", maxWidth: 960 }}>
@@ -316,9 +333,9 @@ export default function TEACalculator() {
               <select style={sel} value={ibcCycle} onChange={(e) => setIbcCycle(e.target.value)}>
                 {Object.entries(IBC_CYCLES).map(([k, v]) => <option key={k} value={k}>{v.label}</option>)}
               </select>
-              <div style={{ fontSize: 10, color: C.textDim, marginTop: 8, lineHeight: 1.5 }}>{ibc.note}</div>
+              <div style={{ fontSize: TYPO.xs, color: C.textDim, marginTop: 8, lineHeight: 1.5 }}>{ibc.note}</div>
               {ibc.genderNeutralProvisions && (
-                <div style={{ marginTop: 8, fontSize: 10, color: C.blue, background: `${C.blue}10`, padding: "6px 10px", borderRadius: 4, lineHeight: 1.5 }}>
+                <div style={{ marginTop: 8, fontSize: TYPO.xs, color: C.blue, background: `${C.blue}10`, padding: "6px 10px", borderRadius: 4, lineHeight: 1.5 }}>
                   ℹ This cycle includes multi-user gender-neutral facility provisions (§2902.1.2). All-gender restrooms may satisfy fixture requirements when privacy partitions comply with IPC §405.3.4.
                 </div>
               )}
@@ -335,9 +352,9 @@ export default function TEACalculator() {
                 <div style={{ marginTop: 12 }}>
                   <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
                     <input type="checkbox" style={{ width: 16, height: 16, accentColor: C.accent, cursor: "pointer" }} checked={cafeteriaAsInstructional} onChange={(e) => setCafeteriaAsInstructional(e.target.checked)} />
-                    <span style={{ fontSize: 12, color: C.textMid }}>Cafeteria instructional credit <CodeTag dim>§61.1040(i)(2)</CodeTag></span>
+                    <span style={{ fontSize: TYPO.body, color: C.textMid }}>Cafeteria instructional credit <CodeTag dim>§61.1040(i)(2)</CodeTag></span>
                   </div>
-                  <div style={{ fontSize: 10, color: C.textDim, marginLeft: 26, marginTop: 4, lineHeight: 1.5 }}>0.5 factor for ≤50% instructional use. Requires board-approved innovative practices.</div>
+                  <div style={{ fontSize: TYPO.xs, color: C.textDim, marginLeft: 26, marginTop: 4, lineHeight: 1.5 }}>0.5 factor for ≤50% instructional use. Requires board-approved innovative practices.</div>
                 </div>
               )}
             </div>
@@ -349,15 +366,15 @@ export default function TEACalculator() {
         <div style={{ display: "flex", gap: 10, marginBottom: 16, flexWrap: "wrap" }}>
           {FLEXIBILITY_LEVELS.map((fl) => (
             <div key={fl.id} style={chip(flexLevel === fl.id)} onClick={() => setFlexLevel(fl.id)}>
-              <div style={{ fontSize: 13, fontWeight: 700, color: flexLevel === fl.id ? C.accent : C.textMid, marginBottom: 2 }}>{fl.label}</div>
-              <div style={{ fontSize: 10, color: C.textDim, lineHeight: 1.4 }}>{fl.desc}</div>
+              <div style={{ fontSize: TYPO.bodyLg, fontWeight: 700, color: flexLevel === fl.id ? C.accent : C.textMid, marginBottom: 2 }}>{fl.label}</div>
+              <div style={{ fontSize: TYPO.xs, color: C.textDim, lineHeight: 1.4 }}>{fl.desc}</div>
             </div>
           ))}
         </div>
 
         {/* ADVANCED */}
-        <button style={{ display: "flex", alignItems: "center", gap: 8, cursor: "pointer", padding: "12px 0", border: "none", background: "none", color: C.textDim, fontSize: 11, fontWeight: 600, letterSpacing: "0.1em", textTransform: "uppercase", fontFamily: "'DM Sans', sans-serif" }} onClick={() => setShowAdvanced(!showAdvanced)}>
-          <span style={{ fontSize: 14, transform: showAdvanced ? "rotate(90deg)" : "rotate(0deg)", display: "inline-block", transition: "transform .15s" }}>▸</span>
+        <button style={{ display: "flex", alignItems: "center", gap: 8, cursor: "pointer", padding: "12px 0", border: "none", background: "none", color: C.textDim, fontSize: TYPO.sm, fontWeight: 600, letterSpacing: "0.1em", textTransform: "uppercase", fontFamily: "'DM Sans', sans-serif" }} onClick={() => setShowAdvanced(!showAdvanced)}>
+          <span style={{ fontSize: TYPO.lg, transform: showAdvanced ? "rotate(90deg)" : "rotate(0deg)", display: "inline-block", transition: "transform .15s" }}>▸</span>
           Advanced Parameters
         </button>
         {showAdvanced && (
@@ -382,21 +399,21 @@ export default function TEACalculator() {
             <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(170px, 1fr))", gap: 12, padding: "16px 24px 20px" }}>
               {[["Instructional SF", results.totalInstructionalSF], ["Library SF", results.librarySF], ["Gymnasium SF", results.gymSF], ["Support SF", results.totalSupportSF], ["Total Net SF", results.netSF]].map(([l, v], i) => (
                 <div key={i} style={{ padding: "14px 16px", background: C.bg, borderRadius: 6, border: `1px solid ${C.border}` }}>
-                  <div style={{ fontSize: 10, fontWeight: 600, color: C.textDim, letterSpacing: "0.08em", textTransform: "uppercase", marginBottom: 4 }}>{l}</div>
-                  <div style={{ fontSize: 18, fontWeight: 700, color: C.text, fontFamily: "'DM Mono', monospace" }}>{fmt(v)}</div>
+                  <div style={{ fontSize: TYPO.xs, fontWeight: 600, color: C.textDim, letterSpacing: "0.08em", textTransform: "uppercase", marginBottom: 4 }}>{l}</div>
+                  <div style={{ fontSize: TYPO.card, fontWeight: 700, color: C.text, fontFamily: "'DM Mono', monospace" }}>{fmt(v)}</div>
                 </div>
               ))}
               <div style={{ padding: "14px 16px", background: C.bg, borderRadius: 6, border: `1px solid ${C.accent}40` }}>
-                <div style={{ fontSize: 10, fontWeight: 600, color: C.accent, letterSpacing: "0.08em", textTransform: "uppercase", marginBottom: 4 }}>Gross SF (×{effectiveGross.toFixed(2)})</div>
-                <div style={{ fontSize: 24, fontWeight: 700, color: C.accentBright, fontFamily: "'DM Mono', monospace" }}>{fmt(finalGrossSF)}</div>
+                <div style={{ fontSize: TYPO.xs, fontWeight: 600, color: C.accent, letterSpacing: "0.08em", textTransform: "uppercase", marginBottom: 4 }}>Gross SF (×{effectiveGross.toFixed(2)})</div>
+                <div style={{ fontSize: TYPO.display, fontWeight: 700, color: C.accentBright, fontFamily: "'DM Mono', monospace" }}>{fmt(finalGrossSF)}</div>
               </div>
             </div>
-            <div style={{ margin: "0 24px 12px", padding: "12px 16px", borderRadius: 6, display: "flex", alignItems: "center", gap: 10, fontSize: 12, fontWeight: 600, background: meetsAggregate ? `${C.green}15` : `${C.red}15`, border: `1px solid ${meetsAggregate ? C.green : C.red}30`, color: meetsAggregate ? C.green : C.red }}>
-              <span style={{ fontSize: 16 }}>{meetsAggregate ? "✓" : "✗"}</span>
+            <div style={{ margin: "0 24px 12px", padding: "12px 16px", borderRadius: 6, display: "flex", alignItems: "center", gap: 10, fontSize: TYPO.body, fontWeight: 600, background: meetsAggregate ? `${C.green}15` : `${C.red}15`, border: `1px solid ${meetsAggregate ? C.green : C.red}30`, color: meetsAggregate ? C.green : C.red }}>
+              <span style={{ fontSize: TYPO.icon }}>{meetsAggregate ? "✓" : "✗"}</span>
               <span>Aggregate: {fmt(results.aggregateSF)} SF ({sfpp} SF/pp × {fmt(studentCount)}){meetsAggregate ? ` — +${fmt(results.totalInstructionalSF - results.aggregateSF)} SF` : ` — ${fmt(results.aggregateSF - results.totalInstructionalSF)} SF short`}</span>
             </div>
             {cafeteriaAsInstructional && results.cafeteriaInstructionalCredit > 0 && (
-              <div style={{ margin: "0 24px 16px", padding: "10px 16px", borderRadius: 6, background: `${C.blue}10`, border: `1px solid ${C.blue}25`, fontSize: 11, color: C.blue }}>ℹ Cafeteria credit: {fmt(results.cafeteriaInstructionalCredit)} SF at 0.5 factor · §61.1040(i)(2)</div>
+              <div style={{ margin: "0 24px 16px", padding: "10px 16px", borderRadius: 6, background: `${C.blue}10`, border: `1px solid ${C.blue}25`, fontSize: TYPO.sm, color: C.blue }}>ℹ Cafeteria credit: {fmt(results.cafeteriaInstructionalCredit)} SF at 0.5 factor · §61.1040(i)(2)</div>
             )}
           </div>
 
@@ -404,14 +421,14 @@ export default function TEACalculator() {
           <div style={secL}>Section 1 — Instructional Spaces <CodeTag>§61.1040(g)–(h)</CodeTag></div>
           <div style={rC}>
             <div style={{ overflowX: "auto" }}>
-            <table style={{ width: "100%", borderCollapse: "collapse", fontSize: 13 }}>
+            <table style={{ width: "100%", borderCollapse: "collapse", fontSize: TYPO.bodyLg }}>
               <thead><tr><th style={th}>Space Type</th><th style={thR}>Qty</th><th style={thR}>SF/Room</th><th style={thR}>SF/Stud.</th><th style={thR}>Total SF</th><th style={th}>Notes</th><th style={th}>Code</th></tr></thead>
               <tbody>
                 {results.rooms.map((rm, i) => <tr key={i} style={{ background: i % 2 ? `${C.bg}50` : "transparent" }}><td style={td}>{rm.type}</td><td style={tdR}>{rm.count}</td><td style={tdR}>{fmt(rm.sfPerRoom)}</td><td style={tdR}>{rm.sfPerStudentUsed}</td><td style={tdR}>{fmt(rm.count * rm.sfPerRoom)}</td><td style={tdN}>{rm.note}</td><td style={tdC}>{rm.code}</td></tr>)}
                 <tr><td style={td}>Library</td><td style={tdR}>—</td><td style={tdR}>{fmt(results.librarySF)}</td><td style={tdR}>—</td><td style={tdR}>{fmt(results.librarySF)}</td><td style={tdN}>Scaled by enrollment</td><td style={tdC}>§61.1040(g)(1)(A)</td></tr>
                 <tr><td style={td}>Gymnasium / PE</td><td style={tdR}>—</td><td style={tdR}>{fmt(results.gymSF)}</td><td style={tdR}>—</td><td style={tdR}>{fmt(results.gymSF)}</td><td style={tdN}>Minimum by campus type</td><td style={tdC}>§61.1040(g)(1)(B)</td></tr>
                 {cafeteriaAsInstructional && results.cafeteriaInstructionalCredit > 0 && <tr style={{ background: `${C.blue}08` }}><td style={td}>Cafeteria Credit</td><td style={tdR}>—</td><td style={tdR}>—</td><td style={tdR}>×0.5</td><td style={tdR}>{fmt(results.cafeteriaInstructionalCredit)}</td><td style={tdN}>Qualitative only</td><td style={tdC}>§61.1040(i)(2)</td></tr>}
-                <tr style={{ background: `${C.blue}08` }}><td style={{ padding: "12px 16px", fontWeight: 700, color: C.blue, fontSize: 12 }} colSpan={4}>INSTRUCTIONAL SUBTOTAL</td><td style={{ padding: "12px 16px", fontWeight: 700, color: C.blue, fontSize: 14, textAlign: "right", fontFamily: "'DM Mono', monospace" }}>{fmt(results.totalInstructionalSF + results.librarySF + results.gymSF)}</td><td colSpan={2}></td></tr>
+                <tr style={{ background: `${C.blue}08` }}><td style={{ padding: "12px 16px", fontWeight: 700, color: C.blue, fontSize: TYPO.body }} colSpan={4}>INSTRUCTIONAL SUBTOTAL</td><td style={{ padding: "12px 16px", fontWeight: 700, color: C.blue, fontSize: TYPO.lg, textAlign: "right", fontFamily: "'DM Mono', monospace" }}>{fmt(results.totalInstructionalSF + results.librarySF + results.gymSF)}</td><td colSpan={2}></td></tr>
               </tbody>
             </table>
             </div>
@@ -420,13 +437,13 @@ export default function TEACalculator() {
           {/* SECTION 2 */}
           <div style={secL}>Section 2 — Support & Service Spaces <CodeTag dim>{ibc.label} / TAS / District Std.</CodeTag></div>
           <div style={rC}>
-            <div style={rH}><span style={rHL}>Administrative, Service & Mechanical</span><span style={{ fontSize: 10, color: C.textDim }}>Staff: {results.staffCount} ({(STAFF_RATIO[campusType] * 100).toFixed(0)}%)</span></div>
+            <div style={rH}><span style={rHL}>Administrative, Service & Mechanical</span><span style={{ fontSize: TYPO.xs, color: C.textDim }}>Staff: {results.staffCount} ({(STAFF_RATIO[campusType] * 100).toFixed(0)}%)</span></div>
             <div style={{ overflowX: "auto" }}>
-            <table style={{ width: "100%", borderCollapse: "collapse", fontSize: 13 }}>
+            <table style={{ width: "100%", borderCollapse: "collapse", fontSize: TYPO.bodyLg }}>
               <thead><tr><th style={th}>Space Type</th><th style={thR}>Total SF</th><th style={th}>Notes</th><th style={th}>Code</th></tr></thead>
               <tbody>
                 {results.support.map((s, i) => <tr key={i} style={{ background: i % 2 ? `${C.bg}50` : "transparent" }}><td style={td}>{s.type}</td><td style={tdR}>{fmt(s.sf)}</td><td style={tdN}>{s.note}</td><td style={tdC}>{s.code}</td></tr>)}
-                <tr style={{ background: `${C.purple}08` }}><td style={{ padding: "12px 16px", fontWeight: 700, color: C.purple, fontSize: 12 }}>SUPPORT SUBTOTAL</td><td style={{ padding: "12px 16px", fontWeight: 700, color: C.purple, fontSize: 14, textAlign: "right", fontFamily: "'DM Mono', monospace" }}>{fmt(results.totalSupportSF)}</td><td colSpan={2}></td></tr>
+                <tr style={{ background: `${C.purple}08` }}><td style={{ padding: "12px 16px", fontWeight: 700, color: C.purple, fontSize: TYPO.body }}>SUPPORT SUBTOTAL</td><td style={{ padding: "12px 16px", fontWeight: 700, color: C.purple, fontSize: TYPO.lg, textAlign: "right", fontFamily: "'DM Mono', monospace" }}>{fmt(results.totalSupportSF)}</td><td colSpan={2}></td></tr>
               </tbody>
             </table>
             </div>
@@ -436,14 +453,14 @@ export default function TEACalculator() {
           {results.plumbing && (
             <div style={rC}>
               <div style={rH}><span style={rHL}>Plumbing Fixture Detail</span><CodeTag dim>{ibc.label} §2902.1 Table 2902.1 / TAS Ch. 6</CodeTag></div>
-              <div style={{ padding: "16px 24px", fontSize: 12, color: C.textMid, display: "grid", gridTemplateColumns: "1fr 1fr", gap: 16 }}>
+              <div style={{ padding: "16px 24px", fontSize: TYPO.body, color: C.textMid, display: "grid", gridTemplateColumns: "1fr 1fr", gap: 16 }}>
                 <div>
                   <div style={{ fontWeight: 700, marginBottom: 8, color: C.text }}>Student Restrooms</div>
                   <div style={{ lineHeight: 2.2 }}>
                     WC: <span style={{ fontFamily: "'DM Mono', monospace" }}>{results.plumbing.student.wc_male}M / {results.plumbing.student.wc_female}F</span> <CodeTag dim>1:50/sex</CodeTag><br />
                     Lav: <span style={{ fontFamily: "'DM Mono', monospace" }}>{results.plumbing.student.lav_male}M / {results.plumbing.student.lav_female}F</span> <CodeTag dim>1:50/sex</CodeTag><br />
                     Clusters: <span style={{ fontFamily: "'DM Mono', monospace" }}>{results.plumbing.student.clusters}</span><br />
-                    <span style={{ fontSize: 10, color: C.textDim }}>Min. 1 accessible/cluster · TAS §604</span>
+                    <span style={{ fontSize: TYPO.xs, color: C.textDim }}>Min. 1 accessible/cluster · TAS §604</span>
                   </div>
                 </div>
                 <div>
@@ -452,16 +469,16 @@ export default function TEACalculator() {
                     WC: <span style={{ fontFamily: "'DM Mono', monospace" }}>{results.plumbing.staff.wc_male}M / {results.plumbing.staff.wc_female}F</span> <CodeTag dim>Business occ.</CodeTag><br />
                     Lav: <span style={{ fontFamily: "'DM Mono', monospace" }}>{results.plumbing.staff.lav_male}M / {results.plumbing.staff.lav_female}F</span><br />
                     Clusters: <span style={{ fontFamily: "'DM Mono', monospace" }}>{results.plumbing.staff.clusters}</span> (separate)<br />
-                    <span style={{ fontSize: 10, color: C.textDim }}>Urinal sub. max {(ibc.urinalSubMax * 100).toFixed(0)}% WC · {ibc.label} §2902.1 fn.(i)</span>
+                    <span style={{ fontSize: TYPO.xs, color: C.textDim }}>Urinal sub. max {(ibc.urinalSubMax * 100).toFixed(0)}% WC · {ibc.label} §2902.1 fn.(i)</span>
                   </div>
                 </div>
               </div>
-              <div style={{ padding: "0 24px 12px", fontSize: 11, color: C.textDim }}>
+              <div style={{ padding: "0 24px 12px", fontSize: TYPO.sm, color: C.textDim }}>
                 Drinking Fountains: <span style={{ fontFamily: "'DM Mono', monospace", color: C.text }}>{results.plumbing.drinkingFountains}</span>
                 {results.plumbing.drinkingFountains === 0 ? ` (exempt — occupant load ≤${ibc.dfExemptThreshold} per ${ibc.label})` : ` (1:100 occupants · hi-lo accessible · TAS §602)`}
               </div>
               {results.plumbing.genderNeutral && (
-                <div style={{ margin: "0 24px 16px", padding: "10px 16px", borderRadius: 6, background: `${C.blue}10`, border: `1px solid ${C.blue}25`, fontSize: 11, color: C.blue, lineHeight: 1.5 }}>
+                <div style={{ margin: "0 24px 16px", padding: "10px 16px", borderRadius: 6, background: `${C.blue}10`, border: `1px solid ${C.blue}25`, fontSize: TYPO.sm, color: C.blue, lineHeight: 1.5 }}>
                   ℹ {ibc.label} permits multi-user gender-neutral facilities when privacy partitions comply with IPC §405.3.4. All-gender single-user rooms contribute to required fixture count per §2902.1.2. Group E occupancies must maintain separate facilities unless exception criteria are met.
                 </div>
               )}
@@ -471,13 +488,13 @@ export default function TEACalculator() {
           {/* SECTION 3 */}
           <div style={secL}>Section 3 — Gross Building Area <CodeTag dim>Industry Standard</CodeTag></div>
           <div style={rC}>
-            <table style={{ width: "100%", borderCollapse: "collapse", fontSize: 13 }}>
+            <table style={{ width: "100%", borderCollapse: "collapse", fontSize: TYPO.bodyLg }}>
               <tbody>
                 <tr><td style={td}>Instructional + Common</td><td style={tdR}>{fmt(results.totalInstructionalSF + results.librarySF + results.gymSF)}</td><td style={tdN}>Section 1</td></tr>
                 <tr><td style={td}>Support & Service</td><td style={tdR}>{fmt(results.totalSupportSF)}</td><td style={tdN}>Section 2</td></tr>
                 <tr style={{ background: `${C.text}05` }}><td style={{ ...td, fontWeight: 700 }}>Total Net SF</td><td style={{ ...tdR, fontWeight: 700 }}>{fmt(results.netSF)}</td><td style={tdN}>Sum of assignable spaces</td></tr>
                 <tr><td style={td}>Net-to-Gross Factor</td><td style={tdR}>×{effectiveGross.toFixed(2)}</td><td style={tdN}>Walls, corridors, circulation, stairs, structure</td></tr>
-                <tr style={{ background: `${C.accent}08` }}><td style={{ padding: "14px 16px", fontWeight: 700, color: C.accent, fontSize: 13 }}>ESTIMATED GROSS BUILDING SF</td><td style={{ padding: "14px 16px", fontWeight: 700, color: C.accent, fontSize: 15, textAlign: "right", fontFamily: "'DM Mono', monospace" }}>{fmt(finalGrossSF)}</td><td></td></tr>
+                <tr style={{ background: `${C.accent}08` }}><td style={{ padding: "14px 16px", fontWeight: 700, color: C.accent, fontSize: TYPO.bodyLg }}>ESTIMATED GROSS BUILDING SF</td><td style={{ padding: "14px 16px", fontWeight: 700, color: C.accent, fontSize: TYPO.lg, textAlign: "right", fontFamily: "'DM Mono', monospace" }}>{fmt(finalGrossSF)}</td><td></td></tr>
               </tbody>
             </table>
           </div>
@@ -485,7 +502,7 @@ export default function TEACalculator() {
           {/* ASSUMPTIONS */}
           <div style={rC}>
             <div style={rH}><span style={rHL}>Assumptions, Caveats & Code References</span></div>
-            <div style={{ fontSize: 11, color: C.textDim, lineHeight: 1.7, padding: "16px 24px", borderTop: `1px solid ${C.border}` }}>
+            <div style={{ fontSize: TYPO.sm, color: C.textDim, lineHeight: 1.7, padding: "16px 24px", borderTop: `1px solid ${C.border}` }}>
               <strong>Building code:</strong> {ibc.label} selected. Plumbing fixture ratios for Group E (Educational): WC 1:50/sex, Lav 1:50/sex, DF 1:100 — consistent across IBC 2003–2024. Staff areas at Business occupancy rates. Urinal substitution capped at {(ibc.urinalSubMax * 100).toFixed(0)}% of required WC in educational occupancies.
               {ibc.genderNeutralProvisions && ` Multi-user gender-neutral provisions available per ${ibc.label} §2902.1.2 / §2902.2.`}
               {ibc.dfExemptThreshold > 0 && ` Drinking fountain exemption: occupant loads ≤${ibc.dfExemptThreshold} per ${ibc.label}.`}

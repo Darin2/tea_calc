@@ -1,0 +1,31 @@
+/**
+ * Responsive typography scale — fluid between ~320px and 1280px viewports.
+ * Uses clamp(min, preferred, max) so text scales smoothly on mobile and desktop.
+ * All values in rem for accessibility (respects user font-size).
+ */
+:root {
+  /* Smallest: code tags, table code column */
+  --font-size-caption: clamp(0.5rem, 0.45rem + 0.4vw, 0.625rem);
+  /* Overlines, section labels, table headers */
+  --font-size-xs: clamp(0.5625rem, 0.5rem + 0.45vw, 0.6875rem);
+  /* Labels, small body, notes */
+  --font-size-sm: clamp(0.625rem, 0.55rem + 0.5vw, 0.75rem);
+  /* Body text, table cells, buttons */
+  --font-size-body: clamp(0.6875rem, 0.6rem + 0.55vw, 0.8125rem);
+  /* Slightly larger body, table default */
+  --font-size-bodyLg: clamp(0.75rem, 0.65rem + 0.6vw, 0.875rem);
+  /* Medium: subtitles, badges */
+  --font-size-md: clamp(0.75rem, 0.65rem + 0.6vw, 0.875rem);
+  /* Inputs, subtotal numbers, icons */
+  --font-size-lg: clamp(0.8125rem, 0.7rem + 0.7vw, 1rem);
+  /* Card value numbers */
+  --font-size-xl: clamp(1rem, 0.85rem + 0.9vw, 1.125rem);
+  /* Summary card numbers (e.g. 18px) */
+  --font-size-card: clamp(1rem, 0.9rem + 1vw, 1.25rem);
+  /* Hero number (gross SF) */
+  --font-size-display: clamp(1.25rem, 1.1rem + 1.2vw, 1.5rem);
+  /* Page title */
+  --font-size-h1: clamp(1.25rem, 1.1rem + 1.2vw, 1.5rem);
+  /* Small icon (check/cross) */
+  --font-size-icon: clamp(0.875rem, 0.8rem + 0.5vw, 1rem);
+}
