@@ -277,7 +277,7 @@ export default function TEACalculator() {
   const sel = { ...inp, fontFamily: "'DM Sans', sans-serif", appearance: "none", cursor: "pointer" };
   const lbl = { display: "block", fontSize: TYPO.sm, fontWeight: 600, color: C.textMid, marginBottom: 6 };
   const card = { background: C.surface, border: `1px solid ${C.border}`, borderRadius: 8, padding: "20px 24px", marginBottom: 16 };
-  const secL = { fontSize: TYPO.xs, fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: C.textDim, marginBottom: 12, display: "flex", alignItems: "center", gap: 8, flexWrap: "wrap" };
+  const sectionHeading = { fontSize: TYPO.xs, fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: C.textDim, margin: 0, marginBottom: 12, display: "flex", alignItems: "center", gap: 8, flexWrap: "wrap" };
   const rC = { background: C.surface, border: `1px solid ${C.border}`, borderRadius: 8, overflow: "hidden", marginBottom: 16 };
   const rH = { padding: "14px 24px", borderBottom: `1px solid ${C.border}`, display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: 8 };
   const rHL = { fontSize: TYPO.xs, fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: C.textDim };
@@ -311,9 +311,9 @@ export default function TEACalculator() {
         <div className="row">
           <div className="col-12">
 
-        {/* DESIGN CRITERIA */}
-        <div style={secL}>Design Criteria <CodeTag dim>§61.1040(d)(2)</CodeTag></div>
-        <div style={card}>
+        <section aria-labelledby="design-criteria-heading">
+          <h2 id="design-criteria-heading" style={sectionHeading}>Design Criteria <CodeTag dim>§61.1040(d)(2)</CodeTag></h2>
+          <div style={card}>
           <div className="row g-3">
             <div className="col-12">
               <label style={lbl}>Campus Type <CodeTag dim>§61.1040(a)(29)</CodeTag></label>
@@ -330,12 +330,12 @@ export default function TEACalculator() {
               <input style={inp} type="number" min={1} max={maxAllowed} value={classSize !== null ? classSize : effectiveClassSize} onChange={(e) => handleClassSizeChange(e.target.value)} />
             </div>
           </div>
-        </div>
+          </div>
+        </section>
 
-        {/* IBC CYCLE + COMPLIANCE */}
-        <div style={{ display: "flex", gap: 16, flexWrap: "wrap" }}>
-          <div style={{ flex: 1, minWidth: 280 }}>
-            <div style={secL}>Adopted Building Code <CodeTag dim>§61.1040(j)(1)</CodeTag></div>
+        <div className="row g-3">
+          <section className="col-12 col-lg-6" aria-labelledby="building-code-heading">
+            <h2 id="building-code-heading" style={sectionHeading}>Adopted Building Code <CodeTag dim>§61.1040(j)(1)</CodeTag></h2>
             <div style={{ ...card }}>
               <label style={lbl}>IBC Code Cycle</label>
               <select style={sel} value={ibcCycle} onChange={(e) => setIbcCycle(e.target.value)}>
@@ -348,9 +348,9 @@ export default function TEACalculator() {
                 </div>
               )}
             </div>
-          </div>
-          <div style={{ flex: 1, minWidth: 280 }}>
-            <div style={secL}>Compliance Method <CodeTag dim>§61.1040(h) / §61.1040(i)</CodeTag></div>
+          </section>
+          <section className="col-12 col-lg-6" aria-labelledby="compliance-method-heading">
+            <h2 id="compliance-method-heading" style={sectionHeading}>Compliance Method <CodeTag dim>§61.1040(h) / §61.1040(i)</CodeTag></h2>
             <div style={{ ...card }}>
               <div style={{ display: "flex", gap: 8 }}>
                 <div style={radio(complianceMethod === "quantitative")} onClick={() => { setComplianceMethod("quantitative"); setCafeteriaAsInstructional(false); }}>Quantitative (Default)</div>
@@ -366,26 +366,29 @@ export default function TEACalculator() {
                 </div>
               )}
             </div>
-          </div>
+          </section>
         </div>
 
-        {/* FLEXIBILITY */}
-        <div style={secL}>Flexibility Level <CodeTag dim>§61.1040(h)(2)(A–D)</CodeTag></div>
-        <div style={{ display: "flex", gap: 10, marginBottom: 16, flexWrap: "wrap" }}>
+        <section aria-labelledby="flexibility-heading">
+          <h2 id="flexibility-heading" style={sectionHeading}>Flexibility Level <CodeTag dim>§61.1040(h)(2)(A–D)</CodeTag></h2>
+          <div style={{ display: "flex", gap: 10, marginBottom: 16, flexWrap: "wrap" }}>
           {FLEXIBILITY_LEVELS.map((fl) => (
             <div key={fl.id} style={chip(flexLevel === fl.id)} onClick={() => setFlexLevel(fl.id)}>
               <div style={{ fontSize: TYPO.bodyLg, fontWeight: 700, color: flexLevel === fl.id ? C.accent : C.textMid, marginBottom: 2 }}>{fl.label}</div>
               <div style={{ fontSize: TYPO.xs, color: C.textDim, lineHeight: 1.4 }}>{fl.desc}</div>
             </div>
           ))}
-        </div>
+          </div>
+        </section>
 
-        {/* ADVANCED */}
-        <button style={{ display: "flex", alignItems: "center", gap: 8, cursor: "pointer", padding: "12px 0", border: "none", background: "none", color: C.textDim, fontSize: TYPO.sm, fontWeight: 600, letterSpacing: "0.1em", textTransform: "uppercase", fontFamily: "'DM Sans', sans-serif" }} onClick={() => setShowAdvanced(!showAdvanced)}>
-          <span style={{ fontSize: TYPO.lg, transform: showAdvanced ? "rotate(90deg)" : "rotate(0deg)", display: "inline-block", transition: "transform .15s" }}>▸</span>
-          Advanced Parameters
-        </button>
-        {showAdvanced && (
+        <section aria-labelledby="advanced-heading">
+          <h2 id="advanced-heading" style={sectionHeading}>
+            <button type="button" style={{ display: "flex", alignItems: "center", gap: 8, cursor: "pointer", padding: 0, border: "none", background: "none", color: "inherit", fontSize: "inherit", fontWeight: "inherit", letterSpacing: "inherit", textTransform: "inherit", fontFamily: "inherit" }} onClick={() => setShowAdvanced(!showAdvanced)}>
+              <span style={{ fontSize: TYPO.lg, transform: showAdvanced ? "rotate(90deg)" : "rotate(0deg)", display: "inline-block", transition: "transform .15s" }}>▸</span>
+              Advanced Parameters
+            </button>
+          </h2>
+          {showAdvanced && (
           <div style={card}>
             <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(180px, 1fr))", gap: 16 }}>
               {campusType !== "elementary" && <div><label style={lbl}>Periods / Day</label><input style={inp} type="number" min={1} max={12} value={advanced.periodsPerDay} onChange={(e) => updateAdv("periodsPerDay", Math.max(1, parseInt(e.target.value, 10) || 7))} /></div>}
@@ -397,12 +400,13 @@ export default function TEACalculator() {
               <div><label style={lbl}>Net-to-Gross Factor</label><input style={inp} type="number" min={1.1} max={1.7} step={0.01} value={grossOverride !== null ? grossOverride : NET_TO_GROSS[campusType]} onChange={(e) => { const v = parseFloat(e.target.value); setGrossOverride(isNaN(v) ? null : Math.min(1.7, Math.max(1.1, v))); }} /></div>
             </div>
           </div>
-        )}
+          )}
+        </section>
 
-        {/* ═══════════ RESULTS ═══════════ */}
         {studentCount > 0 && (<>
-          <div style={{ ...secL, marginTop: 24 }}>Project Summary</div>
-          <div style={rC}>
+          <section aria-labelledby="project-summary-heading" style={{ marginTop: 24 }}>
+            <h2 id="project-summary-heading" style={sectionHeading}>Project Summary</h2>
+            <div style={rC}>
             <div style={rH}><span style={rHL}>Space Summary</span><CodeTag>{complianceMethod === "quantitative" ? "§61.1040(h)" : "§61.1040(i)"} + {ibc.label}</CodeTag></div>
             <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(170px, 1fr))", gap: 12, padding: "16px 24px 20px" }}>
               {[["Instructional SF", results.totalInstructionalSF], ["Library SF", results.librarySF], ["Gymnasium SF", results.gymSF], ["Support SF", results.totalSupportSF], ["Total Net SF", results.netSF]].map(([l, v], i) => (
@@ -424,10 +428,11 @@ export default function TEACalculator() {
               <div className="max-line-length-60ch" style={{ margin: "0 24px 16px", padding: "10px 16px", borderRadius: 6, background: `${C.blue}10`, border: `1px solid ${C.blue}25`, fontSize: TYPO.sm, color: C.blue }}>ℹ Cafeteria credit: {fmt(results.cafeteriaInstructionalCredit)} SF at 0.5 factor · §61.1040(i)(2)</div>
             )}
           </div>
+          </section>
 
-          {/* SECTION 1 */}
-          <div style={secL}>Section 1 — Instructional Spaces <CodeTag>§61.1040(g)–(h)</CodeTag></div>
-          <div style={rC}>
+          <section aria-labelledby="instructional-spaces-heading">
+            <h2 id="instructional-spaces-heading" style={sectionHeading}>Section 1 — Instructional Spaces <CodeTag>§61.1040(g)–(h)</CodeTag></h2>
+            <div style={rC}>
             <div style={{ overflowX: "auto" }}>
             <table style={{ width: "100%", borderCollapse: "collapse", fontSize: TYPO.bodyLg }}>
               <thead><tr><th style={th}>Space Type</th><th style={thR}>Qty</th><th style={thR}>SF/Room</th><th style={thR}>SF/Stud.</th><th style={thR}>Total SF</th><th style={th}>Notes</th><th style={th}>Code</th></tr></thead>
@@ -441,10 +446,11 @@ export default function TEACalculator() {
             </table>
             </div>
           </div>
+          </section>
 
-          {/* SECTION 2 */}
-          <div style={secL}>Section 2 — Support & Service Spaces <CodeTag dim>{ibc.label} / TAS / District Std.</CodeTag></div>
-          <div style={rC}>
+          <section aria-labelledby="support-spaces-heading">
+            <h2 id="support-spaces-heading" style={sectionHeading}>Section 2 — Support & Service Spaces <CodeTag dim>{ibc.label} / TAS / District Std.</CodeTag></h2>
+            <div style={rC}>
             <div style={rH}><span style={rHL}>Administrative, Service & Mechanical</span><span style={{ fontSize: TYPO.xs, color: C.textDim }}>Staff: {results.staffCount} ({(STAFF_RATIO[campusType] * 100).toFixed(0)}%)</span></div>
             <div style={{ overflowX: "auto" }}>
             <table style={{ width: "100%", borderCollapse: "collapse", fontSize: TYPO.bodyLg }}>
@@ -456,11 +462,12 @@ export default function TEACalculator() {
             </table>
             </div>
           </div>
+          </section>
 
-          {/* PLUMBING DETAIL */}
           {results.plumbing && (
+          <section aria-labelledby="plumbing-heading">
+            <h2 id="plumbing-heading" style={sectionHeading}>Plumbing Fixture Detail <CodeTag dim>{ibc.label} §2902.1 Table 2902.1 / TAS Ch. 6</CodeTag></h2>
             <div style={rC}>
-              <div style={rH}><span style={rHL}>Plumbing Fixture Detail</span><CodeTag dim>{ibc.label} §2902.1 Table 2902.1 / TAS Ch. 6</CodeTag></div>
               <div style={{ padding: "16px 24px", fontSize: TYPO.body, color: C.textMid, display: "grid", gridTemplateColumns: "1fr 1fr", gap: 16 }}>
                 <div>
                   <div style={{ fontWeight: 700, marginBottom: 8, color: C.text }}>Student Restrooms</div>
@@ -491,11 +498,12 @@ export default function TEACalculator() {
                 </div>
               )}
             </div>
+          </section>
           )}
 
-          {/* SECTION 3 */}
-          <div style={secL}>Section 3 — Gross Building Area <CodeTag dim>Industry Standard</CodeTag></div>
-          <div style={rC}>
+          <section aria-labelledby="gross-building-heading">
+            <h2 id="gross-building-heading" style={sectionHeading}>Section 3 — Gross Building Area <CodeTag dim>Industry Standard</CodeTag></h2>
+            <div style={rC}>
             <table style={{ width: "100%", borderCollapse: "collapse", fontSize: TYPO.bodyLg }}>
               <tbody>
                 <tr><td style={td}>Instructional + Common</td><td style={tdR}>{fmt(results.totalInstructionalSF + results.librarySF + results.gymSF)}</td><td style={tdN}>Section 1</td></tr>
@@ -506,10 +514,11 @@ export default function TEACalculator() {
               </tbody>
             </table>
           </div>
+          </section>
 
-          {/* ASSUMPTIONS */}
-          <div style={rC}>
-            <div style={rH}><span style={rHL}>Assumptions, Caveats & Code References</span></div>
+          <section aria-labelledby="assumptions-heading">
+            <h2 id="assumptions-heading" style={sectionHeading}>Assumptions, Caveats & Code References</h2>
+            <div style={rC}>
             <div className="max-line-length-60ch" style={{ fontSize: TYPO.sm, color: C.textDim, lineHeight: 1.7, padding: "16px 24px", borderTop: `1px solid ${C.border}` }}>
               <strong>Building code:</strong> {ibc.label} selected. Plumbing fixture ratios for Group E (Educational): WC 1:50/sex, Lav 1:50/sex, DF 1:100 — consistent across IBC 2003–2024. Staff areas at Business occupancy rates. Urinal substitution capped at {(ibc.urinalSubMax * 100).toFixed(0)}% of required WC in educational occupancies.
               {ibc.genderNeutralProvisions && ` Multi-user gender-neutral provisions available per ${ibc.label} §2902.1.2 / §2902.2.`}
@@ -525,6 +534,7 @@ export default function TEACalculator() {
               <strong style={{ color: C.accent }}>Disclaimer:</strong> Estimated minimums for early feasibility. Science lab safety (chemical storage (F), fume hoods (D), eye/face wash (G), safety showers (H), emergency shut-offs (J) per §61.1040(g)(2)) not sized by this tool. Local amendments may modify IBC requirements — verify with AHJ. Does not replace licensed architect or engineer services.
             </div>
           </div>
+          </section>
         </>)}
           </div>
         </div>
