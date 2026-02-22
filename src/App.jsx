@@ -225,7 +225,7 @@ function calculate(campusType, studentCount, flexLevel, classSize, advanced, com
 
 const C = { bg: "#0C0F14", surface: "#141820", border: "#232A36", accent: "#D4A053", accentDim: "#8B6D3F", accentBright: "#E8B86D", text: "#E8E4DD", textDim: "#8A8680", textMid: "#B5B0A8", red: "#C45C5C", green: "#5CA06C", blue: "#5C8AB4", purple: "#9B7EC8" };
 
-// Responsive typography scale (see typography.css); use TYPO.* in fontSize for fluid mobile→desktop scaling
+// Responsive typography scale (see styles.css); use TYPO.* in fontSize for fluid mobile→desktop scaling
 const TYPO = {
   caption: "var(--font-size-caption)",
   xs: "var(--font-size-xs)",

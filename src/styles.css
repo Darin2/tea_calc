@@ -36,8 +36,11 @@
   max-width: min(100%, 60ch);
 }
 
-/* Extra side padding on wide screens (use with Bootstrap .container) */
+/* Main layout: width + side padding in one place (use with Bootstrap .container) */
 .container--wide-padding {
+  max-width: 960px;
+  margin-left: auto;
+  margin-right: auto;
   padding-left: 1rem;
   padding-right: 1rem;
 }
